@@ -28,7 +28,7 @@ export default function Student({ student }) {
               {Object.keys(rest).map((s) => {
                 return (
                   <Tr key={s}>
-                    <Td>
+                    <Td w="20%">
                       <Text
                         css={{ fontWeight: "bold" }}
                         _firstLetter={{ textTransform: "uppercase" }}
@@ -36,7 +36,7 @@ export default function Student({ student }) {
                         {s}:
                       </Text>
                     </Td>
-                    <Td>
+                    <Td maxW="1px" whiteSpace="pre-line">
                       <Text align="right">{rest[s]}</Text>
                     </Td>
                   </Tr>
