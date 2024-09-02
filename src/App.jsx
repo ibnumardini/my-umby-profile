@@ -71,7 +71,7 @@ function App() {
       h="100vh"
       flexDir="column"
     >
-      <Card width="xl">
+      <Card w={["sm", "lg"]}>
         <CardBody>
           <Center>
             <Heading size="md" my={2}>
