@@ -21,46 +21,49 @@ function App() {
   const apiBaseUrl = "https://my-umby-profile-api.vercel.app";
   const toast = useToast();
 
-  function handleSearch() {
+  const showToast = (title, description, status) => {
+    toast({
+      title,
+      description,
+      status,
+      duration: 5000,
+      isClosable: true,
+      position: "top",
+    });
+  };
+
+  const fetchStudentData = async (nim) => {
+    try {
+      const response = await fetch(`${apiBaseUrl}/student/${nim}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data.result;
+    } catch (error) {
+      console.error("Failed to fetch student data:", error);
+      throw error;
+    }
+  };
+
+  const handleSearch = async () => {
     if (!nim) {
       setStudent(null);
-      return false;
+      return;
     }
 
     setIsLoading(true);
 
-    fetch(`${apiBaseUrl}/student/${nim}`)
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setStudent(data.result);
-
-        toast({
-          title: "Successfully.",
-          description: "Successfully retrieve student data for you.",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-          position: "top",
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-
-        toast({
-          title: "Failed.",
-          description: "Failed to retrieve student data for you.",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-          position: "top",
-        });
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }
+    try {
+      const studentData = await fetchStudentData(nim);
+      setStudent(studentData);
+      showToast("Success", "Successfully retrieved student data.", "success");
+    } catch {
+      showToast("Error", "Failed to retrieve student data.", "error");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Box
@@ -85,7 +88,12 @@ function App() {
               value={nim}
               onChange={({ target }) => setNim(target.value)}
             />
-            <Button variant="solid" colorScheme="blue" onClick={handleSearch}>
+            <Button
+              variant="solid"
+              colorScheme="blue"
+              onClick={handleSearch}
+              isDisabled={isLoading}
+            >
               Search
             </Button>
           </Box>
