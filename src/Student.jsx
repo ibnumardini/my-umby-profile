@@ -15,6 +15,15 @@ import {
 export default function Student({ student }) {
   const { pict_url, ...rest } = student;
 
+  const regDate = new Date(rest?.regist_date).toLocaleDateString("id-ID", {
+    weekday: "long",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
+  rest.regist_date = regDate;
+
   return (
     <>
       <Divider my={2} />
