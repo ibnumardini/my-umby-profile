@@ -72,6 +72,7 @@ export default function Navbar({ hasResults, onSearchAgain }) {
               display="flex"
               alignItems="center"
               justifyContent="center"
+              marginRight={2}
             >
               <Flex align="center" gap={2} w="100%">
                 <FaArrowLeft size={10} />
