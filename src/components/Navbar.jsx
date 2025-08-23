@@ -5,13 +5,15 @@ import {
   Text,
   IconButton,
   useColorModeValue,
+  useColorMode,
   Link,
   Button,
 } from "@chakra-ui/react";
-import { FaGithub, FaArrowLeft, FaUniversity } from "react-icons/fa";
+import { FaGithub, FaArrowLeft, FaUniversity, FaMoon, FaSun } from "react-icons/fa";
 import { Icon } from "@chakra-ui/react"
 
 export default function Navbar({ hasResults, onSearchAgain }) {
+  const { colorMode, toggleColorMode } = useColorMode();
   const bg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.700");
 
@@ -49,11 +51,11 @@ export default function Navbar({ hasResults, onSearchAgain }) {
           _hover={{ opacity: 0.8 }}
           transition="opacity 0.2s"
         >
-          <Icon as={FaUniversity} boxSize={{ base: 5, sm: 6 }} color="primary.500" />
+          <Icon as={FaUniversity} boxSize={{ base: 5, sm: 6 }} color={useColorModeValue("primary.500", "blue.300")} />
           <Text
             fontSize={{ base: "md", sm: "xl" }}
             fontWeight="bold"
-            color="primary.500"
+            color={useColorModeValue("primary.500", "blue.300")}
           >
             My UMBY Profile
           </Text>
@@ -73,7 +75,7 @@ export default function Navbar({ hasResults, onSearchAgain }) {
             >
               <Flex align="center" gap={2} w="100%">
                 <FaArrowLeft size={10} />
-                <Text>Cari Kembali</Text>
+                <Text color={useColorModeValue("inherit", "white")}>Cari Kembali</Text>
                 <Box
                   w={2}
                   h={2}
@@ -90,6 +92,22 @@ export default function Navbar({ hasResults, onSearchAgain }) {
               </Flex>
             </Button>
           )}
+          <IconButton
+            aria-label="Toggle dark mode"
+            icon={colorMode === "light" ? <FaMoon /> : <FaSun />}
+            onClick={toggleColorMode}
+            variant="ghost"
+            size="md"
+            fontSize="lg"
+            color={useColorModeValue("gray.600", "yellow.300")}
+            rounded="full"
+            _hover={{
+              color: useColorModeValue("blue.500", "yellow.200"),
+              bg: useColorModeValue("blue.50", "whiteAlpha.200"),
+              transform: "scale(1.1)",
+            }}
+            transition="all 0.2s"
+          />
           <Link
             href="https://github.com/ibnumardini/my-umby-profile"
             isExternal
@@ -102,12 +120,14 @@ export default function Navbar({ hasResults, onSearchAgain }) {
               variant="ghost"
               size="md"
               fontSize="lg"
-              color="gray.600"
+              color={useColorModeValue("gray.600", "gray.300")}
               rounded="full"
               _hover={{
-                color: "blue.500",
-                bg: "blue.50",
+                color: useColorModeValue("blue.500", "blue.300"),
+                bg: useColorModeValue("blue.50", "whiteAlpha.200"),
+                transform: "scale(1.1)",
               }}
+              transition="all 0.2s"
             />
           </Link>
         </Flex>

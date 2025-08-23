@@ -45,6 +45,14 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
 
   const bg = useColorModeValue("gray.50", "gray.900");
   const textColor = useColorModeValue("gray.600", "gray.300");
+  const tableBg = useColorModeValue("white", "gray.800");
+  const tableHoverBg = useColorModeValue("gray.50", "gray.700");
+  const sortIconColor = useColorModeValue("#1e3a8a", "#60a5fa");
+  const linkColor = useColorModeValue("blue.500", "blue.300");
+  const linkHoverColor = useColorModeValue("blue.400", "blue.200");
+  const headingColor = useColorModeValue("blue.500", "blue.300");
+  const modalBg = useColorModeValue("white", "gray.800");
+  const modalHeaderColor = useColorModeValue("gray.800", "white");
   const apiBaseUrl =
     import.meta.env.VITE_API_BASE_URL ||
     "https://my-umby-profile-api.vercel.app";
@@ -236,7 +244,7 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
                   as="h1"
                   fontSize={{ base: "3xl", md: "5xl" }}
                   fontWeight="bold"
-                  color="blue.500"
+                  color={headingColor}
                   maxW="800px"
                   lineHeight="shorter"
                 >
@@ -253,9 +261,11 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
                   <Link
                     href="https://pddikti.kemdiktisaintek.go.id/"
                     isExternal
-                    color="blue.500"
+                    color={linkColor}
                     textDecoration="underline"
-                    _hover={{ color: "blue.600" }}
+                    _hover={{
+                      color: linkHoverColor,
+                    }}
                   >
                     PDDIKTI (Pangkalan Data Pendidikan Tinggi)
                   </Link>
@@ -347,19 +357,19 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
                     <Box textAlign="center" mb={4}>
                       <Heading
                         size="xl"
-                        color="primary.600"
+                        color={headingColor}
                         mb={2}
                         fontWeight="bold"
                       >
                         Hasil Pencarian
                       </Heading>
-                      <Text color="gray.600" fontSize="md">
+                      <Text color={textColor} fontSize="md">
                         Ditemukan {students.filter((s) => s.found).length} dari{" "}
                         {students.length} mahasiswa
                       </Text>
                     </Box>
                     <TableContainer
-                      bg="white"
+                      bg={tableBg}
                       rounded="xl"
                       shadow="lg"
                       w="100%"
@@ -371,7 +381,7 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
                             <Th
                               cursor="pointer"
                               onClick={handleSort}
-                              _hover={{ bg: "gray.50" }}
+                              _hover={{ bg: tableHoverBg }}
                               userSelect="none"
                             >
                               <Flex align="center" gap={1}>
@@ -380,10 +390,10 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
                                   <FaSort opacity={0.5} size={10} />
                                 )}
                                 {sortOrder === "asc" && (
-                                  <FaSortUp color="#1e3a8a" size={10} />
+                                  <FaSortUp color={sortIconColor} size={10} />
                                 )}
                                 {sortOrder === "desc" && (
-                                  <FaSortDown color="#1e3a8a" size={10} />
+                                  <FaSortDown color={sortIconColor} size={10} />
                                 )}
                               </Flex>
                             </Th>
@@ -450,11 +460,16 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
 
       <Modal isOpen={isOpen} onClose={onClose} size="4xl">
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader pb={0} display="flex" alignItems="center">
+        <ModalContent bg={modalBg}>
+          <ModalHeader
+            pb={0}
+            display="flex"
+            alignItems="center"
+            color={modalHeaderColor}
+          >
             Detail Mahasiswa
           </ModalHeader>
-          <ModalCloseButton top={4} />
+          <ModalCloseButton top={4} color={modalHeaderColor} />
           <ModalBody pb={6} pt={4}>
             {selectedStudent ? (
               <Student student={selectedStudent} />

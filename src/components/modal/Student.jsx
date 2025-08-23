@@ -10,9 +10,16 @@ import {
   Text,
   Flex,
   Box,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 export default function Student({ student }) {
+  const tableBg = useColorModeValue("white", "gray.800");
+  const borderColor = useColorModeValue("white", "gray.600");
+  const avatarBg = useColorModeValue("gray.100", "gray.700");
+  const textColor = useColorModeValue("gray.800", "gray.200");
+  const labelColor = useColorModeValue("gray.600", "gray.400");
+
   if (!student) {
     return <Text>Data mahasiswa tidak tersedia</Text>;
   }
@@ -79,13 +86,13 @@ export default function Student({ student }) {
               w="150px"
               h="150px"
               borderRadius="16px"
-              bg="gray.100"
-              border="2px solid white"
+              bg={avatarBg}
+              border={`2px solid ${borderColor}`}
             />
           </Box>
         </Box>
         <Box flex="1">
-          <TableContainer>
+          <TableContainer bg={tableBg} rounded="lg">
             <Table variant="simple" size="md">
               <Tbody>
                 {studentData.map((item, index) => (
@@ -94,7 +101,7 @@ export default function Student({ student }) {
                       <Text
                         fontSize="md"
                         fontWeight="semibold"
-                        color="gray.700"
+                        color={labelColor}
                       >
                         {item.label}:
                       </Text>
@@ -102,7 +109,7 @@ export default function Student({ student }) {
                     <Td px={3} py={2}>
                       <Text
                         fontSize="md"
-                        color="gray.800"
+                        color={textColor}
                         whiteSpace="pre-line"
                       >
                         {item.value}

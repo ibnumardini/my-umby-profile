@@ -104,7 +104,7 @@ const theme = extendTheme({
   },
   config: {
     initialColorMode: "light",
-    useSystemColorMode: false,
+    useSystemColorMode: true,
   },
 });
 
