@@ -9,7 +9,7 @@ import {
   Link,
   Button,
 } from "@chakra-ui/react";
-import { FaGithub, FaArrowLeft, FaUniversity, FaMoon, FaSun } from "react-icons/fa";
+import { FaGithub, FaSearch, FaUniversity, FaMoon, FaSun } from "react-icons/fa";
 import { Icon } from "@chakra-ui/react"
 
 export default function Navbar({ hasResults, onSearchAgain }) {
@@ -58,40 +58,32 @@ export default function Navbar({ hasResults, onSearchAgain }) {
             fontWeight="bold"
             color={useColorModeValue("primary.500", "blue.300")}
           >
-            My UMBY Profile
+            <Box as="span" display={{ base: "inline", sm: "none" }}>
+              UMBY
+            </Box>
+            <Box as="span" display={{ base: "none", sm: "inline" }}>
+              My UMBY Profile
+            </Box>
           </Text>
         </Flex>
 
-        <Flex gap={3} align="center">
+        <Flex gap={{ base: 1, sm: 2 }} align="center">
           {hasResults && (
             <Button
-              size="sm"
+              size={{ base: "sm", sm: "md" }}
               colorScheme="blue"
-              variant="outline"
+              variant="solid"
               onClick={onSearchAgain}
-              fontSize="sm"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              marginRight={2}
+              leftIcon={<FaSearch />}
+              fontSize={{ base: "sm", sm: "md" }}
+              rounded="full"
+              px={{ base: 3, sm: 4 }}
+              _hover={{
+                transform: "scale(1.05)",
+              }}
+              transition="all 0.2s"
             >
-              <Flex align="center" gap={2} w="100%">
-                <FaArrowLeft size={10} />
-                <Text color={buttonTextColor}>Cari Kembali</Text>
-                <Box
-                  w={2}
-                  h={2}
-                  bg="yellow.400"
-                  borderRadius="full"
-                  animation="pulse 1.5s infinite"
-                  sx={{
-                    "@keyframes pulse": {
-                      "0%, 100%": { opacity: 1, transform: "scale(1)" },
-                      "50%": { opacity: 0.3, transform: "scale(1.8)" },
-                    },
-                  }}
-                />
-              </Flex>
+              Cari
             </Button>
           )}
           <IconButton
@@ -99,10 +91,12 @@ export default function Navbar({ hasResults, onSearchAgain }) {
             icon={colorMode === "light" ? <FaMoon /> : <FaSun />}
             onClick={toggleColorMode}
             variant="ghost"
-            size="md"
-            fontSize="lg"
+            size={{ base: "sm", sm: "md" }}
+            fontSize={{ base: "md", sm: "lg" }}
             color={useColorModeValue("gray.600", "yellow.300")}
             rounded="full"
+            minW={{ base: 8, sm: 10 }}
+            h={{ base: 8, sm: 10 }}
             _hover={{
               color: useColorModeValue("blue.500", "yellow.200"),
               bg: useColorModeValue("blue.50", "whiteAlpha.200"),
@@ -120,10 +114,12 @@ export default function Navbar({ hasResults, onSearchAgain }) {
               aria-label="GitHub Repository"
               icon={<FaGithub />}
               variant="ghost"
-              size="md"
-              fontSize="lg"
+              size={{ base: "sm", sm: "md" }}
+              fontSize={{ base: "md", sm: "lg" }}
               color={useColorModeValue("gray.600", "gray.300")}
               rounded="full"
+              minW={{ base: 8, sm: 10 }}
+              h={{ base: 8, sm: 10 }}
               _hover={{
                 color: useColorModeValue("blue.500", "blue.300"),
                 bg: useColorModeValue("blue.50", "whiteAlpha.200"),
