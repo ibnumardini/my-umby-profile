@@ -313,14 +313,48 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
                   size="sm"
                   fontSize="sm"
                   onClick={() => {
-                    const count = Math.floor(Math.random() * 4) + 3;
+                    const prodiData = [
+                      { code: "01", name: "AGROTEKNOLOGI" },
+                      { code: "02", name: "PETERNAKAN" },
+                      { code: "03", name: "TEKNOLOGI HASIL PERTANIAN" },
+                      { code: "05", name: "MANAJEMEN" },
+                      { code: "06", name: "AKUNTANSI" },
+                      { code: "07", name: "ILMU KOMUNIKASI DAN MULTI MEDIA" },
+                      { code: "08", name: "PSIKOLOGI" },
+                      { code: "11", name: "INFORMATIKA" },
+                      { code: "12", name: "SISTEM INFORMASI" },
+                      { code: "13", name: "PENDIDIKAN BAHASA INGGRIS" },
+                      { code: "14", name: "PENDIDIKAN MATEMATIKA" },
+                      { code: "15", name: "BIMBINGAN KONSELING" },
+                      { code: "16", name: "ILMU KEOLAHRAGAAN" },
+                      { code: "50", name: "MAGISTER PSIKOLOGI" },
+                      { code: "51", name: "MAGISTER PSIKOLOGI PROFESI" }
+                    ];
+
+                    const count = Math.floor(Math.random() * 6) + 10;
                     const randomNims = [];
 
                     for (let i = 0; i < count; i++) {
-                      const randomNum = Math.floor(Math.random() * 100)
-                        .toString()
-                        .padStart(2, "0");
-                      randomNims.push(`2311100${randomNum}`);
+                      const years = [19, 20, 21, 22, 23, 24];
+                      const randomYear = years[Math.floor(Math.random() * years.length)];
+                      
+                      const randomProdi = prodiData[Math.floor(Math.random() * prodiData.length)];
+                      
+                      const randomNum = Math.random();
+                      let randomTipe;
+                      if (randomNum < 0.9) {
+                        randomTipe = 1;
+                      } else if (randomNum < 0.95) {
+                        randomTipe = 2;
+                      } else {
+                        randomTipe = 3;
+                      }
+                      
+                      const randomUrutan = Math.floor(Math.random() * 100) + 1;
+                      const urutanFormatted = randomUrutan.toString().padStart(4, "0");
+                      
+                      const nim = `${randomYear}${randomProdi.code}${randomTipe}${urutanFormatted}`;
+                      randomNims.push(nim);
                     }
 
                     setNimInput(randomNims.join(", "));
