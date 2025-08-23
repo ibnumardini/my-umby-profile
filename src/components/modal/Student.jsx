@@ -66,8 +66,12 @@ export default function Student({ student }) {
   return (
     <>
       <Divider mb={4} />
-      <Flex gap={8} align="flex-start">
-        <Box flex="0 0 auto">
+      <Flex 
+        direction={{ base: "column", md: "row" }} 
+        gap={{ base: 6, md: 8 }} 
+        align={{ base: "center", md: "flex-start" }}
+      >
+        <Box flex={{ base: "none", md: "0 0 auto" }} align="center">
           <Box
             p={1}
             bg="linear-gradient(135deg, #1e3a8a 0%, #0f182a 100%)"
@@ -83,15 +87,15 @@ export default function Student({ student }) {
             <Avatar
               src={pict_url}
               alt={name}
-              w="150px"
-              h="150px"
+              w={{ base: "120px", md: "150px" }}
+              h={{ base: "120px", md: "150px" }}
               borderRadius="16px"
               bg={avatarBg}
               border={`2px solid ${borderColor}`}
             />
           </Box>
         </Box>
-        <Box flex="1">
+        <Box flex="1" w="100%">
           <TableContainer bg={tableBg} rounded="lg">
             <Table variant="simple" size="md">
               <Tbody>
