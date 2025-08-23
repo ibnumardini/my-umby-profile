@@ -9,14 +9,19 @@ import {
   Link,
   Button,
 } from "@chakra-ui/react";
-import { FaGithub, FaSearch, FaUniversity, FaMoon, FaSun } from "react-icons/fa";
-import { Icon } from "@chakra-ui/react"
+import {
+  FaGithub,
+  FaSearch,
+  FaUniversity,
+  FaMoon,
+  FaSun,
+} from "react-icons/fa";
+import { Icon } from "@chakra-ui/react";
 
 export default function Navbar({ hasResults, onSearchAgain }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const bg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.700");
-  const buttonTextColor = useColorModeValue("inherit", "white");
 
   return (
     <Box
@@ -52,7 +57,11 @@ export default function Navbar({ hasResults, onSearchAgain }) {
           _hover={{ opacity: 0.8 }}
           transition="opacity 0.2s"
         >
-          <Icon as={FaUniversity} boxSize={{ base: 5, sm: 6 }} color={useColorModeValue("primary.500", "blue.300")} />
+          <Icon
+            as={FaUniversity}
+            boxSize={{ base: 5, sm: 6 }}
+            color={useColorModeValue("primary.500", "blue.300")}
+          />
           <Text
             fontSize={{ base: "md", sm: "xl" }}
             fontWeight="bold"
