@@ -43,11 +43,12 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
   const [sortOrder, setSortOrder] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const bg = useColorModeValue("gray.50", "gray.900");
+  const bg = useColorModeValue("white", "gray.800");
+  const bgTransparent = useColorModeValue("gray.50/40", "gray.900/40");
   const textColor = useColorModeValue("gray.600", "gray.300");
   const tableBg = useColorModeValue("white", "gray.800");
   const tableHoverBg = useColorModeValue("gray.50", "gray.700");
-  const sortIconColor = useColorModeValue("#1e3a8a", "#60a5fa");
+  const sortIconColor = useColorModeValue("blue.800", "blue.200");
   const linkColor = useColorModeValue("blue.500", "blue.300");
   const linkHoverColor = useColorModeValue("blue.400", "blue.200");
   const headingColor = useColorModeValue("blue.500", "blue.300");
@@ -234,7 +235,7 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
       {!hasResults && (
         <Box
           id="home"
-          bg={bg}
+          bg={bgTransparent}
           minH="100vh"
           display="flex"
           alignItems="center"
@@ -279,7 +280,7 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
                 </Text>
               </Stack>
 
-              <Stack spacing={4} w="100%" maxW="600px">
+              <Stack spacing={4} w="100%" maxW="600px" bg={bg}>
                 <Textarea
                   placeholder="Masukkan NIM (pisahkan dengan spasi atau koma)&#10;Contoh:&#10;231110040, 2311100xx&#10;atau&#10;231110040 2311100xx"
                   value={nimInput}
@@ -328,7 +329,7 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
                       { code: "15", name: "BIMBINGAN KONSELING" },
                       { code: "16", name: "ILMU KEOLAHRAGAAN" },
                       { code: "50", name: "MAGISTER PSIKOLOGI" },
-                      { code: "51", name: "MAGISTER PSIKOLOGI PROFESI" }
+                      { code: "51", name: "MAGISTER PSIKOLOGI PROFESI" },
                     ];
 
                     const count = Math.floor(Math.random() * 6) + 10;
@@ -336,10 +337,12 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
 
                     for (let i = 0; i < count; i++) {
                       const years = [19, 20, 21, 22, 23, 24];
-                      const randomYear = years[Math.floor(Math.random() * years.length)];
-                      
-                      const randomProdi = prodiData[Math.floor(Math.random() * prodiData.length)];
-                      
+                      const randomYear =
+                        years[Math.floor(Math.random() * years.length)];
+
+                      const randomProdi =
+                        prodiData[Math.floor(Math.random() * prodiData.length)];
+
                       const randomNum = Math.random();
                       let randomTipe;
                       if (randomNum < 0.9) {
@@ -349,10 +352,12 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
                       } else {
                         randomTipe = 3;
                       }
-                      
+
                       const randomUrutan = Math.floor(Math.random() * 100) + 1;
-                      const urutanFormatted = randomUrutan.toString().padStart(4, "0");
-                      
+                      const urutanFormatted = randomUrutan
+                        .toString()
+                        .padStart(4, "0");
+
                       const nim = `${randomYear}${randomProdi.code}${randomTipe}${urutanFormatted}`;
                       randomNims.push(nim);
                     }
@@ -369,7 +374,7 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
       )}
 
       {hasResults && (
-        <Box bg={bg} minH="100vh" pt={{ base: 24, sm: 32 }} pb={20}>
+        <Box bg={bgTransparent} minH="100vh" pt={{ base: 24, sm: 32 }} pb={20}>
           <Container maxW="container.xl">
             <VStack spacing={12}>
               {errors.length > 0 && (

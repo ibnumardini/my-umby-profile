@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Box } from "@chakra-ui/react";
+import ParticleBackground from "./components/ParticleBackgroud";
 import Navbar from "./components/Navbar";
 import SearchProfile from "./components/sections/SearchProfile";
 import Watermark from "./components/Watermark";
@@ -15,8 +16,12 @@ function App() {
 
   return (
     <Box>
+      <ParticleBackground />
       <Navbar hasResults={hasResults} onSearchAgain={handleSearchAgain} />
-      <SearchProfile onResultsChange={setHasResults} resetTrigger={resetSearch} />
+      <SearchProfile
+        onResultsChange={setHasResults}
+        resetTrigger={resetSearch}
+      />
       <Watermark />
     </Box>
   );
