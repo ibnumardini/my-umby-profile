@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Box,
   Container,
@@ -58,16 +58,19 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
     "https://my-umby-profile-api.vercel.app";
   const toast = useToast();
 
-  const showToast = (title, description, status) => {
-    toast({
-      title,
-      description,
-      status,
-      duration: 5000,
-      isClosable: true,
-      position: "bottom-left",
-    });
-  };
+  const showToast = useCallback(
+    (title, description, status) => {
+      toast({
+        title,
+        description,
+        status,
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    },
+    [toast]
+  );
 
   const fetchStudentData = async (nims) => {
     try {
@@ -224,7 +227,7 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
       "Selamat datang di UMBY Student Directory. Masukkan NIM untuk mencari data mahasiswa.",
       "success"
     );
-  }, []);
+  }, [showToast]);
 
   return (
     <>
