@@ -235,10 +235,12 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
         <Box
           id="home"
           bg={bg}
-          h="100vh"
+          minH="100vh"
           display="flex"
           alignItems="center"
           justifyContent="center"
+          pt={{ base: 24 }}
+          pb={20}
         >
           <Container maxW="container.xl">
             <VStack spacing={12} textAlign="center">
@@ -337,7 +339,7 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
       )}
 
       {hasResults && (
-        <Box bg={bg} minH="100vh" pt={32} pb={20}>
+        <Box bg={bg} minH="100vh" pt={{ base: 24, sm: 32 }} pb={20}>
           <Container maxW="container.xl">
             <VStack spacing={12}>
               {errors.length > 0 && (
