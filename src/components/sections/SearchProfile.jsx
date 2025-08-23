@@ -30,8 +30,30 @@ import {
   useDisclosure,
   Flex,
   Link,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Checkbox,
+  Select,
+  FormControl,
+  FormLabel,
+  HStack,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from "@chakra-ui/react";
-import { FaSearch, FaEye, FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
+import {
+  FaSearch,
+  FaEye,
+  FaSort,
+  FaSortUp,
+  FaSortDown,
+  FaChevronDown,
+  FaCog,
+} from "react-icons/fa";
 import Student from "../modal/Student";
 
 export default function SearchProfile({ onResultsChange, resetTrigger }) {
@@ -41,7 +63,18 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
   const [errors, setErrors] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [sortOrder, setSortOrder] = useState(null);
+  const [advancedOptions, setAdvancedOptions] = useState({
+    selectedProdi: [],
+    selectedYears: [],
+    nimCount: 15,
+    includeMagister: true,
+  });
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isAdvancedOpen,
+    onOpen: onAdvancedOpen,
+    onClose: onAdvancedClose,
+  } = useDisclosure();
 
   const bg = useColorModeValue("white", "gray.800");
   const bgTransparent = useColorModeValue("gray.50/40", "gray.900/40");
@@ -209,6 +242,74 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
 
   const sortedStudents = sortStudents(students);
 
+  const prodiData = [
+    { code: "01", name: "AGROTEKNOLOGI" },
+    { code: "02", name: "PETERNAKAN" },
+    { code: "03", name: "TEKNOLOGI HASIL PERTANIAN" },
+    { code: "05", name: "MANAJEMEN" },
+    { code: "06", name: "AKUNTANSI" },
+    { code: "07", name: "ILMU KOMUNIKASI DAN MULTI MEDIA" },
+    { code: "08", name: "PSIKOLOGI" },
+    { code: "11", name: "INFORMATIKA" },
+    { code: "12", name: "SISTEM INFORMASI" },
+    { code: "13", name: "PENDIDIKAN BAHASA INGGRIS" },
+    { code: "14", name: "PENDIDIKAN MATEMATIKA" },
+    { code: "15", name: "BIMBINGAN KONSELING" },
+    { code: "16", name: "ILMU KEOLAHRAGAAN" },
+    { code: "50", name: "MAGISTER PSIKOLOGI" },
+    { code: "51", name: "MAGISTER PSIKOLOGI PROFESI" },
+  ];
+
+  const generateRandomNIM = (customOptions = null) => {
+    const options = customOptions || {
+      selectedProdi: [],
+      selectedYears: [],
+      nimCount: Math.floor(Math.random() * 6) + 10,
+      includeMagister: true,
+    };
+
+    const availableProdi =
+      options.selectedProdi.length > 0
+        ? prodiData.filter((prodi) =>
+            options.selectedProdi.includes(prodi.code)
+          )
+        : options.includeMagister
+        ? prodiData
+        : prodiData.filter((prodi) => !prodi.code.startsWith("5"));
+
+    const availableYears =
+      options.selectedYears.length > 0
+        ? options.selectedYears
+        : [19, 20, 21, 22, 23, 24];
+
+    const randomNims = [];
+    const count = options.nimCount || Math.floor(Math.random() * 6) + 10;
+
+    for (let i = 0; i < count; i++) {
+      const randomYear =
+        availableYears[Math.floor(Math.random() * availableYears.length)];
+      const randomProdi =
+        availableProdi[Math.floor(Math.random() * availableProdi.length)];
+
+      const randomNum = Math.random();
+      let randomTipe;
+      if (randomNum < 0.9) {
+        randomTipe = 1;
+      } else if (randomNum < 0.95) {
+        randomTipe = 2;
+      } else {
+        randomTipe = 3;
+      }
+
+      const randomUrutan = Math.floor(Math.random() * 100) + 1;
+      const urutanFormatted = randomUrutan.toString().padStart(4, "0");
+      const nim = `${randomYear}${randomProdi.code}${randomTipe}${urutanFormatted}`;
+      randomNims.push(nim);
+    }
+
+    setNimInput(randomNims.join(", "));
+  };
+
   useEffect(() => {
     onResultsChange?.(hasResults);
   }, [hasResults, onResultsChange]);
@@ -308,65 +409,27 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
                   {isLoading ? "Mencari..." : "Cari Profil"}
                 </Button>
 
-                <Button
-                  colorScheme="gray"
-                  variant="ghost"
-                  size="sm"
-                  fontSize="sm"
-                  onClick={() => {
-                    const prodiData = [
-                      { code: "01", name: "AGROTEKNOLOGI" },
-                      { code: "02", name: "PETERNAKAN" },
-                      { code: "03", name: "TEKNOLOGI HASIL PERTANIAN" },
-                      { code: "05", name: "MANAJEMEN" },
-                      { code: "06", name: "AKUNTANSI" },
-                      { code: "07", name: "ILMU KOMUNIKASI DAN MULTI MEDIA" },
-                      { code: "08", name: "PSIKOLOGI" },
-                      { code: "11", name: "INFORMATIKA" },
-                      { code: "12", name: "SISTEM INFORMASI" },
-                      { code: "13", name: "PENDIDIKAN BAHASA INGGRIS" },
-                      { code: "14", name: "PENDIDIKAN MATEMATIKA" },
-                      { code: "15", name: "BIMBINGAN KONSELING" },
-                      { code: "16", name: "ILMU KEOLAHRAGAAN" },
-                      { code: "50", name: "MAGISTER PSIKOLOGI" },
-                      { code: "51", name: "MAGISTER PSIKOLOGI PROFESI" },
-                    ];
-
-                    const count = Math.floor(Math.random() * 6) + 10;
-                    const randomNims = [];
-
-                    for (let i = 0; i < count; i++) {
-                      const years = [19, 20, 21, 22, 23, 24];
-                      const randomYear =
-                        years[Math.floor(Math.random() * years.length)];
-
-                      const randomProdi =
-                        prodiData[Math.floor(Math.random() * prodiData.length)];
-
-                      const randomNum = Math.random();
-                      let randomTipe;
-                      if (randomNum < 0.9) {
-                        randomTipe = 1;
-                      } else if (randomNum < 0.95) {
-                        randomTipe = 2;
-                      } else {
-                        randomTipe = 3;
-                      }
-
-                      const randomUrutan = Math.floor(Math.random() * 100) + 1;
-                      const urutanFormatted = randomUrutan
-                        .toString()
-                        .padStart(4, "0");
-
-                      const nim = `${randomYear}${randomProdi.code}${randomTipe}${urutanFormatted}`;
-                      randomNims.push(nim);
-                    }
-
-                    setNimInput(randomNims.join(", "));
-                  }}
-                >
-                  🎲 Generate NIM Acak
-                </Button>
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    colorScheme="gray"
+                    variant="outline"
+                    size="sm"
+                    fontSize="sm"
+                    rightIcon={<FaChevronDown />}
+                  >
+                    🎲 Generate NIM Acak
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem onClick={() => generateRandomNIM()}>
+                      🎯 Generate NIM Standar (10-15 NIM)
+                    </MenuItem>
+                    <MenuItem onClick={() => onAdvancedOpen()}>
+                      <FaCog style={{ marginRight: "8px" }} />
+                      Advanced Options
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
               </Stack>
             </VStack>
           </Container>
@@ -516,6 +579,150 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
             ) : (
               <Text>Memuat...</Text>
             )}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      <Modal isOpen={isAdvancedOpen} onClose={onAdvancedClose} size="lg">
+        <ModalOverlay />
+        <ModalContent bg={modalBg}>
+          <ModalHeader pb={0} color={modalHeaderColor}>
+            Advanced NIM Generator Options
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6} pt={4}>
+            <VStack spacing={4} align="stretch">
+              <FormControl>
+                <FormLabel>Jumlah NIM yang akan di-generate</FormLabel>
+                <NumberInput
+                  value={advancedOptions.nimCount}
+                  onChange={(valueString) => {
+                    const value = parseInt(valueString) || 10;
+                    setAdvancedOptions((prev) => ({
+                      ...prev,
+                      nimCount: Math.min(Math.max(value, 1), 50),
+                    }));
+                  }}
+                  min={1}
+                  max={50}
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Filter Tahun Angkatan</FormLabel>
+                <Select
+                  placeholder="Pilih tahun angkatan (kosong = semua tahun)"
+                  value={
+                    advancedOptions.selectedYears.length === 1
+                      ? advancedOptions.selectedYears[0]
+                      : ""
+                  }
+                  onChange={(e) => {
+                    const selectedYear = e.target.value;
+                    setAdvancedOptions((prev) => ({
+                      ...prev,
+                      selectedYears: selectedYear
+                        ? [parseInt(selectedYear)]
+                        : [],
+                    }));
+                  }}
+                >
+                  <option value="19">2019 (19)</option>
+                  <option value="20">2020 (20)</option>
+                  <option value="21">2021 (21)</option>
+                  <option value="22">2022 (22)</option>
+                  <option value="23">2023 (23)</option>
+                  <option value="24">2024 (24)</option>
+                </Select>
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Filter Program Studi</FormLabel>
+                <Select
+                  placeholder="Pilih program studi (kosong = semua prodi)"
+                  value={
+                    advancedOptions.selectedProdi.length === 1
+                      ? advancedOptions.selectedProdi[0]
+                      : ""
+                  }
+                  onChange={(e) => {
+                    const selectedProdi = e.target.value;
+                    setAdvancedOptions((prev) => ({
+                      ...prev,
+                      selectedProdi: selectedProdi ? [selectedProdi] : [],
+                    }));
+                  }}
+                >
+                  <optgroup label="Sarjana">
+                    {prodiData
+                      .filter((p) => !p.code.startsWith("5"))
+                      .map((prodi) => (
+                        <option key={prodi.code} value={prodi.code}>
+                          {prodi.name}
+                        </option>
+                      ))}
+                  </optgroup>
+                  <optgroup label="Magister">
+                    {prodiData
+                      .filter((p) => p.code.startsWith("5"))
+                      .map((prodi) => (
+                        <option key={prodi.code} value={prodi.code}>
+                          {prodi.name}
+                        </option>
+                      ))}
+                  </optgroup>
+                </Select>
+              </FormControl>
+
+              <FormControl>
+                <Checkbox
+                  isChecked={advancedOptions.includeMagister}
+                  onChange={(e) => {
+                    setAdvancedOptions((prev) => ({
+                      ...prev,
+                      includeMagister: e.target.checked,
+                    }));
+                  }}
+                  isDisabled={advancedOptions.selectedProdi.length > 0}
+                >
+                  Sertakan Program Magister (jika tidak ada filter prodi
+                  spesifik)
+                </Checkbox>
+              </FormControl>
+
+              <HStack spacing={3} pt={4}>
+                <Button
+                  colorScheme="blue"
+                  onClick={() => {
+                    generateRandomNIM(advancedOptions);
+                    onAdvancedClose();
+                  }}
+                  flex={1}
+                >
+                  Generate NIM
+                </Button>
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    setAdvancedOptions({
+                      selectedProdi: [],
+                      selectedYears: [],
+                      nimCount: 15,
+                      includeMagister: true,
+                    });
+                  }}
+                  flex={1}
+                >
+                  Reset Options
+                </Button>
+              </HStack>
+            </VStack>
           </ModalBody>
         </ModalContent>
       </Modal>
