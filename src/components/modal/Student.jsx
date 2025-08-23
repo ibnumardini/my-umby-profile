@@ -66,9 +66,9 @@ export default function Student({ student }) {
   return (
     <>
       <Divider mb={4} />
-      <Flex 
-        direction={{ base: "column", md: "row" }} 
-        gap={{ base: 6, md: 8 }} 
+      <Flex
+        direction={{ base: "column", md: "row" }}
+        gap={{ base: 6, md: 8 }}
         align={{ base: "center", md: "flex-start" }}
       >
         <Box flex={{ base: "none", md: "0 0 auto" }} align="center">
