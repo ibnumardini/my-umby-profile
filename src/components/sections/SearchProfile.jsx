@@ -292,8 +292,8 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
 
                 <Button
                   colorScheme="blue"
-                  size="lg"
-                  fontSize="lg"
+                  size={{ base: "md", sm: "lg" }}
+                  fontSize={{ base: "md", sm: "lg" }}
                   fontWeight="semibold"
                   onClick={handleSearch}
                   isDisabled={isLoading || !nimInput.trim()}
