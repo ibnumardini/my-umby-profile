@@ -358,10 +358,6 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
                     }
 
                     setNimInput(randomNims.join(", "));
-
-                    setTimeout(() => {
-                      handleSearch();
-                    }, 100);
                   }}
                 >
                   🎲 NIM Acak
