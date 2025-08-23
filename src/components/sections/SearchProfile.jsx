@@ -365,7 +365,7 @@ export default function SearchProfile({ onResultsChange, resetTrigger }) {
                     setNimInput(randomNims.join(", "));
                   }}
                 >
-                  🎲 NIM Acak
+                  🎲 Generate NIM Acak
                 </Button>
               </Stack>
             </VStack>
