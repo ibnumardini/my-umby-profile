@@ -16,6 +16,7 @@ export default function Navbar({ hasResults, onSearchAgain }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const bg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.700");
+  const buttonTextColor = useColorModeValue("inherit", "white");
 
   return (
     <Box
@@ -76,7 +77,7 @@ export default function Navbar({ hasResults, onSearchAgain }) {
             >
               <Flex align="center" gap={2} w="100%">
                 <FaArrowLeft size={10} />
-                <Text color={useColorModeValue("inherit", "white")}>Cari Kembali</Text>
+                <Text color={buttonTextColor}>Cari Kembali</Text>
                 <Box
                   w={2}
                   h={2}
