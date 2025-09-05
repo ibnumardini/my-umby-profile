@@ -33,6 +33,10 @@ yarn build
 yarn preview
 ```
 
+## License
+
+This project is licensed under the Apache License 2.0 License. See the [LICENSE](LICENSE) file for details.
+
 ## Author
 
 Muhammad Fatkurozi <<hi@mardini.dev>>
